@@ -1,4 +1,4 @@
-const Twit = require('twit');
+const Twit = require('twitter');
 const names = require('./names.js');
 //const Poloniex = require('./poloniex');
 var bittrex = require('node-bittrex-api');
@@ -9,17 +9,16 @@ const SECRET = '';
 var IDChecked = [];
 const safeCheck = true; //HIGHLY recomended~
 
-/* See Documentation on poloniex.js */
-//const polo = new Poloniex(API_KEY, SECRET, 0, 0);
-console.log("hello");
-stream.on('tweet', (tweet, err) => {
-  console.log("we got the tweet");
-    if (!isIn(tweet.id)) {
-      checkTweet(tweet.text);
-    } else {
-      console.log(`Found tweet ${tweet.id} but it has already been processed`);
-    }
-})
+
+stream.on('data', function(event) {
+  console.log('got data');
+  console.log(event && event.text);
+});
+
+stream.on('error', function(error) {
+  throw error;
+});
+
 
 function checkTweet(text){
   text = text.toLowerCase();
@@ -30,7 +29,7 @@ function checkTweet(text){
  //       polo.checkBalancesandBuy(val.toUpperCase());
           bittrex.getticker( { market : 'BTC-LTC' }, function( data, err ) {
             console.log( data );
-          });     
+          });
         }
     }
   } else {
